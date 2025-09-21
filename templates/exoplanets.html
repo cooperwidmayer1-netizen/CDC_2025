@@ -1,42 +1,53 @@
 {% extends "base.html" %}
 
-{% block title %}Exoplanets - Space Explorer{% endblock %}
+{% block title %}Exoplanet Explorer{% endblock %}
 
 {% block content %}
 <div class="page-header">
     <div class="container">
         <h1 class="page-title">
             <i class="fas fa-globe"></i>
-            Exoplanets Database
+            Exoplanet Explorer
         </h1>
-        <p class="page-subtitle">Explore discovered exoplanets beyond our solar system</p>
+        <p class="page-subtitle">Discover and explore thousands of exoplanets beyond our solar system</p>
     </div>
 </div>
 
 <div class="container">
     <div class="search-section">
-        <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Search by planet name, host star, or describe what you're looking for...">
-            <button id="searchBtn" class="btn btn-primary">
+        <div class="search-bar-row">
+            <div class="search-box">
                 <i class="fas fa-search"></i>
-                Search
-            </button>
+                <input type="text" id="searchInput" placeholder="Search by planet name, host star, or describe what you're looking for...">
+                <button id="searchBtn" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                    Search
+                </button>
+            </div>
+            <div id="traditionalFilters" class="search-options">
+                <select id="limitSelect" class="filter-select">
+                    <option value="50">Show 50</option>
+                    <option value="100" selected>Show 100</option>
+                    <option value="200">Show 200</option>
+                    <option value="500">Show 500</option>
+                </select>
+            </div>
         </div>
-        <div class="filters">
-            <select id="limitSelect" class="filter-select">
-                <option value="50">Show 50</option>
-                <option value="100" selected>Show 100</option>
-                <option value="200">Show 200</option>
-                <option value="500">Show 500</option>
-            </select>
-            <label class="search-type-toggle">
-                <input type="checkbox" id="semanticSearchToggle">
-                <span class="toggle-label">
+        <div class="search-mode-section">
+            <div class="search-mode-tabs">
+                <button id="traditionalSearchTab" class="mode-tab active">
+                    <i class="fas fa-search"></i>
+                    Regular Search
+                </button>
+                <button id="semanticSearchTab" class="mode-tab">
                     <i class="fas fa-brain"></i>
                     AI Search
-                </span>
-            </label>
+                </button>
+                <button id="perfectPlanetTab" class="mode-tab">
+                    <i class="fas fa-sliders-h"></i>
+                    Build Perfect Planet
+                </button>
+            </div>
         </div>
     </div>
 
@@ -44,6 +55,175 @@
         <div class="search-type-indicator">
             <i class="fas fa-info-circle"></i>
             <span id="searchTypeText">Traditional search</span>
+        </div>
+    </div>
+
+    <!-- Perfect Planet Builder Filters -->
+    <div class="perfect-planet-section" id="perfectPlanetSection" style="display: none;">
+        <div class="perfect-planet-filters">
+            <div class="filters-grid">
+                <!-- Planet Size -->
+                <div class="filter-group">
+                    <h3 class="filter-title">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                        Planet Size
+                    </h3>
+                    <div class="filter-content">
+                        <div class="range-slider">
+                            <label>Radius (Earth Radii)</label>
+                            <div class="slider-container">
+                                <input type="range" id="radiusMin" class="range-input" min="0.31" max="32.6" step="0.1" value="0.31">
+                                <input type="range" id="radiusMax" class="range-input" min="0.31" max="32.6" step="0.1" value="32.6">
+                            </div>
+                            <div class="range-values">
+                                <span id="radiusMinVal">0.31</span> - <span id="radiusMaxVal">32.6</span> R⊕
+                            </div>
+                        </div>
+                        
+                        <div class="range-slider">
+                            <label>Mass (Earth Masses)</label>
+                            <div class="slider-container">
+                                <input type="range" id="massMin" class="range-input" min="0.037" max="100" step="0.1" value="0.037">
+                                <input type="range" id="massMax" class="range-input" min="0.037" max="100" step="0.1" value="100">
+                            </div>
+                            <div class="range-values">
+                                <span id="massMinVal">0.037</span> - <span id="massMaxVal">100</span> M⊕
+                            </div>
+                            <div class="range-note">Mass range capped at 100 M⊕</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Climate & Environment -->
+                <div class="filter-group">
+                    <h3 class="filter-title">
+                        <i class="fas fa-sun"></i>
+                        Climate & Environment
+                    </h3>
+                    <div class="filter-content">
+                        <div class="range-slider">
+                            <label>Stellar Radiation (Earth flux)</label>
+                            <div class="slider-container">
+                                <input type="range" id="insolationMin" class="range-input" min="0" max="10" step="0.1" value="0">
+                                <input type="range" id="insolationMax" class="range-input" min="0" max="10" step="0.1" value="10">
+                            </div>
+                            <div class="range-values">
+                                <span id="insolationMinVal">0</span> - <span id="insolationMaxVal">10</span> × Earth
+                            </div>
+                            <div class="range-note">How much starlight the planet receives</div>
+                        </div>
+                        
+                        <div class="range-slider">
+                            <label>Planet Density (g/cm³)</label>
+                            <div class="slider-container">
+                                <input type="range" id="densityMin" class="range-input" min="0.005" max="50" step="0.1" value="0.005">
+                                <input type="range" id="densityMax" class="range-input" min="0.005" max="50" step="0.1" value="50">
+                            </div>
+                            <div class="range-values">
+                                <span id="densityMinVal">0.005</span> - <span id="densityMaxVal">50</span> g/cm³
+                            </div>
+                            <div class="range-note">Earth: 5.5 | Gas giants: <1 | Rocky: 3-8</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orbital Fun Facts -->
+                <div class="filter-group">
+                    <h3 class="filter-title">
+                        <i class="fas fa-sync-alt"></i>
+                        Orbital Fun Facts
+                    </h3>
+                    <div class="filter-content">
+                        <div class="range-slider">
+                            <label>Length of Year (Days)</label>
+                            <div class="slider-container">
+                                <input type="range" id="periodMin" class="range-input" min="0.238" max="1000" step="0.1" value="0.238">
+                                <input type="range" id="periodMax" class="range-input" min="0.238" max="1000" step="0.1" value="1000">
+                            </div>
+                            <div class="range-values">
+                                <span id="periodMinVal">0.238</span> - <span id="periodMaxVal">1000</span> days
+                            </div>
+                            <div class="range-note">Earth: 365 days | Mercury: 88 days</div>
+                        </div>
+                        
+                        <div class="range-slider">
+                            <label>Distance from Star (AU)</label>
+                            <div class="slider-container">
+                                <input type="range" id="orbitMin" class="range-input" min="0.006" max="2" step="0.001" value="0.006">
+                                <input type="range" id="orbitMax" class="range-input" min="0.006" max="2" step="0.001" value="2">
+                            </div>
+                            <div class="range-values">
+                                <span id="orbitMinVal">0.006</span> - <span id="orbitMaxVal">2</span> AU
+                            </div>
+                            <div class="range-note">Earth: 1 AU | Mercury: 0.39 AU | Mars: 1.5 AU</div>
+                        </div>
+                        
+                        <div class="range-slider">
+                            <label>Orbital Shape (Eccentricity)</label>
+                            <div class="slider-container">
+                                <input type="range" id="eccentricityMin" class="range-input" min="0" max="0.9" step="0.01" value="0">
+                                <input type="range" id="eccentricityMax" class="range-input" min="0" max="0.9" step="0.01" value="0.9">
+                            </div>
+                            <div class="range-values">
+                                <span id="eccentricityMinVal">0</span> - <span id="eccentricityMaxVal">0.9</span>
+                            </div>
+                            <div class="range-note">0 = perfect circle | 0.9 = very elliptical</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Discovery & Distance -->
+                <div class="filter-group">
+                    <h3 class="filter-title">
+                        <i class="fas fa-telescope"></i>
+                        Discovery & Distance
+                    </h3>
+                    <div class="filter-content">
+                        <div class="range-slider">
+                            <label>Distance from Earth (Light Years)</label>
+                            <div class="slider-container">
+                                <input type="range" id="distanceMin" class="range-input" min="4.2" max="1000" step="1" value="4.2">
+                                <input type="range" id="distanceMax" class="range-input" min="4.2" max="1000" step="1" value="1000">
+                            </div>
+                            <div class="range-values">
+                                <span id="distanceMinVal">4.2</span> - <span id="distanceMaxVal">1000</span> ly
+                            </div>
+                            <div class="range-note">Proxima Centauri b: 4.2 ly | Kepler planets: 100s-1000s ly</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Habitability -->
+                <div class="filter-group">
+                    <h3 class="filter-title">
+                        <i class="fas fa-seedling"></i>
+                        Habitability
+                    </h3>
+                    <div class="filter-content">
+                        <div class="range-slider">
+                            <label>Minimum Habitability Score</label>
+                            <div class="slider-container">
+                                <input type="range" id="habitabilityMin" class="range-input" min="0" max="100" step="5" value="0">
+                            </div>
+                            <div class="range-values">
+                                <span id="habitabilityMinVal">0</span>/100
+                            </div>
+                            <div class="range-note">0-19: Not habitable | 80+: Highly habitable</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="perfect-planet-actions">
+                <button id="searchPerfectPlanetsBtn" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                    Find My Perfect Planets
+                </button>
+                <button id="resetPerfectFiltersBtn" class="btn btn-secondary">
+                    <i class="fas fa-undo"></i>
+                    Reset Filters
+                </button>
+            </div>
         </div>
     </div>
 
@@ -87,13 +267,36 @@ document.addEventListener('DOMContentLoaded', function() {
         loadExoplanets(currentSearch);
     });
     
-    // Semantic search toggle
-    document.getElementById('semanticSearchToggle').addEventListener('change', function() {
-        const currentSearch = document.getElementById('searchInput').value.trim();
-        if (currentSearch) {
-            loadExoplanets(currentSearch);
-        }
+    // Remove old semantic search toggle - now handled by mode tabs
+    
+    // Mode switching functionality
+    let currentMode = 'traditional';
+    let dataRanges = {};
+    
+    // Load data ranges for perfect planet sliders
+    loadDataRanges();
+    
+    // Mode tab switching
+    document.getElementById('traditionalSearchTab').addEventListener('click', function() {
+        switchMode('traditional');
     });
+    
+    document.getElementById('semanticSearchTab').addEventListener('click', function() {
+        switchMode('semantic');
+    });
+    
+    document.getElementById('perfectPlanetTab').addEventListener('click', function() {
+        switchMode('perfect');
+    });
+    
+    // Perfect planet functionality
+    document.getElementById('searchPerfectPlanetsBtn').addEventListener('click', searchPerfectPlanets);
+    document.getElementById('resetPerfectFiltersBtn').addEventListener('click', resetPerfectFilters);
+    
+    // Preset buttons removed - they weren't returning useful results
+    
+    // Initialize slider event listeners
+    initializePerfectPlanetSliders();
     
     // Close expanded cards when clicking outside
     document.addEventListener('click', function(e) {
@@ -116,12 +319,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function performSearch() {
     const searchTerm = document.getElementById('searchInput').value.trim();
-    loadExoplanets(searchTerm);
+    const useSemanticSearch = (currentMode === 'semantic');
+    loadExoplanets(searchTerm, useSemanticSearch);
 }
 
-function loadExoplanets(search = '') {
+function loadExoplanets(search = '', useSemanticSearch = false) {
     const limit = document.getElementById('limitSelect').value;
-    const semanticSearch = document.getElementById('semanticSearchToggle').checked;
     const spinner = document.getElementById('loadingSpinner');
     const grid = document.getElementById('exoplanetsGrid');
     const noResults = document.getElementById('noResults');
@@ -137,7 +340,7 @@ function loadExoplanets(search = '') {
     
     if (search) {
         params.append('search', search);
-        if (semanticSearch) {
+        if (useSemanticSearch) {
             params.append('semantic', 'true');
         }
     }
@@ -438,6 +641,292 @@ function showError(message) {
             <p>${message}</p>
         </div>
     `;
+}
+
+// Search Mode Functions
+function switchMode(mode) {
+    currentMode = mode;
+    
+    // Update tab appearance
+    document.querySelectorAll('.mode-tab').forEach(tab => tab.classList.remove('active'));
+    
+    // Show/hide appropriate elements based on mode
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const traditionalFilters = document.getElementById('traditionalFilters');
+    const perfectPlanetSection = document.getElementById('perfectPlanetSection');
+    const grid = document.getElementById('exoplanetsGrid');
+    const title = document.getElementById('resultsTitle');
+    
+    if (mode === 'traditional') {
+        document.getElementById('traditionalSearchTab').classList.add('active');
+        traditionalFilters.style.display = 'flex';
+        perfectPlanetSection.style.display = 'none';
+        searchInput.style.display = 'block';
+        searchBtn.style.display = 'block';
+        searchInput.placeholder = 'Search by planet name or host star...';
+        title.textContent = 'Exoplanets';
+        loadExoplanets();
+        
+    } else if (mode === 'semantic') {
+        document.getElementById('semanticSearchTab').classList.add('active');
+        traditionalFilters.style.display = 'flex';
+        perfectPlanetSection.style.display = 'none';
+        searchInput.style.display = 'block';
+        searchBtn.style.display = 'block';
+        searchInput.placeholder = 'Describe what you\'re looking for using natural language...';
+        title.textContent = 'AI-Powered Search Results';
+        
+        // Clear results and show AI search message
+        grid.innerHTML = `
+            <div class="welcome-message">
+                <i class="fas fa-brain"></i>
+                <h3>AI-Powered Planet Search</h3>
+                <p>Use natural language to describe the type of planet you're looking for. For example: "hot planets close to their star" or "Earth-like worlds in the habitable zone".</p>
+            </div>
+        `;
+        
+    } else if (mode === 'perfect') {
+        document.getElementById('perfectPlanetTab').classList.add('active');
+        traditionalFilters.style.display = 'flex';
+        perfectPlanetSection.style.display = 'block';
+        searchInput.style.display = 'none';
+        searchBtn.style.display = 'none';
+        title.textContent = 'Perfect Planet Matches';
+        
+        grid.innerHTML = `
+            <div class="welcome-message">
+                <i class="fas fa-sliders-h"></i>
+                <h3>Design Your Perfect Planet</h3>
+                <p>Use the filters above to specify your ideal planet characteristics, then click "Find My Perfect Planets" to discover matching exoplanets.</p>
+            </div>
+        `;
+    }
+}
+
+async function loadDataRanges() {
+    try {
+        const response = await fetch('/api/data-ranges');
+        const data = await response.json();
+        dataRanges = data.ranges;
+        updateSliderRanges();
+    } catch (error) {
+        console.error('Error loading data ranges:', error);
+    }
+}
+
+function updateSliderRanges() {
+    if (dataRanges.radius) {
+        document.getElementById('radiusMin').min = dataRanges.radius.min;
+        document.getElementById('radiusMin').max = dataRanges.radius.max;
+        document.getElementById('radiusMax').min = dataRanges.radius.min;
+        document.getElementById('radiusMax').max = dataRanges.radius.max;
+        document.getElementById('radiusMin').value = dataRanges.radius.min;
+        document.getElementById('radiusMax').value = dataRanges.radius.max;
+    }
+    
+    if (dataRanges.mass) {
+        const maxMass = Math.min(dataRanges.mass.max, 100);
+        document.getElementById('massMin').min = dataRanges.mass.min;
+        document.getElementById('massMin').max = maxMass;
+        document.getElementById('massMax').min = dataRanges.mass.min;
+        document.getElementById('massMax').max = maxMass;
+        document.getElementById('massMin').value = dataRanges.mass.min;
+        document.getElementById('massMax').value = maxMass;
+    }
+    
+    if (dataRanges.density) {
+        const maxDensity = Math.min(dataRanges.density.max, 50);
+        document.getElementById('densityMin').min = dataRanges.density.min;
+        document.getElementById('densityMin').max = maxDensity;
+        document.getElementById('densityMax').min = dataRanges.density.min;
+        document.getElementById('densityMax').max = maxDensity;
+        document.getElementById('densityMin').value = dataRanges.density.min;
+        document.getElementById('densityMax').value = maxDensity;
+    }
+    
+    if (dataRanges.orbit) {
+        const maxOrbit = Math.min(dataRanges.orbit.max, 2);
+        document.getElementById('orbitMin').min = dataRanges.orbit.min;
+        document.getElementById('orbitMin').max = maxOrbit;
+        document.getElementById('orbitMax').min = dataRanges.orbit.min;
+        document.getElementById('orbitMax').max = maxOrbit;
+        document.getElementById('orbitMin').value = dataRanges.orbit.min;
+        document.getElementById('orbitMax').value = maxOrbit;
+    }
+    
+    if (dataRanges.eccentricity) {
+        const maxEcc = Math.min(dataRanges.eccentricity.max, 0.9);
+        document.getElementById('eccentricityMin').min = Math.max(0, dataRanges.eccentricity.min);
+        document.getElementById('eccentricityMin').max = maxEcc;
+        document.getElementById('eccentricityMax').min = Math.max(0, dataRanges.eccentricity.min);
+        document.getElementById('eccentricityMax').max = maxEcc;
+        document.getElementById('eccentricityMin').value = Math.max(0, dataRanges.eccentricity.min);
+        document.getElementById('eccentricityMax').value = maxEcc;
+    }
+    
+    updateAllSliderValues();
+}
+
+function initializePerfectPlanetSliders() {
+    const sliders = ['radius', 'mass', 'insolation', 'density', 'period', 'orbit', 'eccentricity', 'distance'];
+    
+    sliders.forEach(slider => {
+        const minSlider = document.getElementById(slider + 'Min');
+        const maxSlider = document.getElementById(slider + 'Max');
+        
+        if (minSlider && maxSlider) {
+            minSlider.addEventListener('input', () => updateSliderValues(slider));
+            maxSlider.addEventListener('input', () => updateSliderValues(slider));
+        }
+    });
+    
+    const habitabilitySlider = document.getElementById('habitabilityMin');
+    if (habitabilitySlider) {
+        habitabilitySlider.addEventListener('input', () => {
+            document.getElementById('habitabilityMinVal').textContent = habitabilitySlider.value;
+        });
+    }
+}
+
+function updateSliderValues(type) {
+    const minSlider = document.getElementById(type + 'Min');
+    const maxSlider = document.getElementById(type + 'Max');
+    const minVal = document.getElementById(type + 'MinVal');
+    const maxVal = document.getElementById(type + 'MaxVal');
+    
+    let minValue = parseFloat(minSlider.value);
+    let maxValue = parseFloat(maxSlider.value);
+    
+    if (minValue > maxValue) {
+        minSlider.value = maxValue;
+        minValue = maxValue;
+    }
+    
+    if (maxValue < minValue) {
+        maxSlider.value = minValue;
+        maxValue = minValue;
+    }
+    
+    minVal.textContent = minValue;
+    maxVal.textContent = maxValue;
+}
+
+function updateAllSliderValues() {
+    const sliders = ['radius', 'mass', 'insolation', 'density', 'period', 'orbit', 'eccentricity', 'distance'];
+    sliders.forEach(slider => updateSliderValues(slider));
+    
+    const habitabilitySlider = document.getElementById('habitabilityMin');
+    if (habitabilitySlider) {
+        document.getElementById('habitabilityMinVal').textContent = habitabilitySlider.value;
+    }
+}
+
+// Preset functions removed - they weren't returning useful results
+
+function resetPerfectFilters() {
+    const sliders = ['radius', 'mass', 'insolation', 'density', 'period', 'orbit', 'eccentricity', 'distance'];
+    
+    sliders.forEach(slider => {
+        const minSlider = document.getElementById(slider + 'Min');
+        const maxSlider = document.getElementById(slider + 'Max');
+        
+        if (minSlider && maxSlider) {
+            minSlider.value = minSlider.min;
+            maxSlider.value = maxSlider.max;
+        }
+    });
+    
+    document.getElementById('habitabilityMin').value = 0;
+    updateAllSliderValues();
+    
+    // Reset results
+    const grid = document.getElementById('exoplanetsGrid');
+    const title = document.getElementById('resultsTitle');
+    title.textContent = 'Perfect Planet Matches';
+    grid.innerHTML = `
+        <div class="welcome-message">
+            <i class="fas fa-sliders-h"></i>
+            <h3>Design Your Perfect Planet</h3>
+            <p>Use the filters above to specify your ideal planet characteristics, then click "Find My Perfect Planets" to discover matching exoplanets.</p>
+        </div>
+    `;
+}
+
+async function searchPerfectPlanets() {
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const resultsGrid = document.getElementById('exoplanetsGrid');
+    const noResults = document.getElementById('noResults');
+    
+    loadingSpinner.style.display = 'block';
+    noResults.style.display = 'none';
+    
+    try {
+        const params = new URLSearchParams();
+        
+        const filters = [
+            ['radius', 'min_radius', 'max_radius'],
+            ['mass', 'min_mass', 'max_mass'],
+            ['insolation', 'min_insolation', 'max_insolation'],
+            ['density', 'min_density', 'max_density'],
+            ['period', 'min_period', 'max_period'],
+            ['orbit', 'min_orbit', 'max_orbit'],
+            ['eccentricity', 'min_eccentricity', 'max_eccentricity'],
+            ['distance', 'min_distance', 'max_distance']
+        ];
+        
+        filters.forEach(([type, minParam, maxParam]) => {
+            const minSlider = document.getElementById(type + 'Min');
+            const maxSlider = document.getElementById(type + 'Max');
+            
+            if (minSlider && maxSlider) {
+                const minVal = parseFloat(minSlider.value);
+                const maxVal = parseFloat(maxSlider.value);
+                const sliderMin = parseFloat(minSlider.min);
+                const sliderMax = parseFloat(minSlider.max);
+                
+                if (minVal > sliderMin) {
+                    if (type === 'distance') {
+                        params.append(minParam, (minVal / 3.26156).toString());
+                    } else {
+                        params.append(minParam, minVal.toString());
+                    }
+                }
+                if (maxVal < sliderMax) {
+                    if (type === 'distance') {
+                        params.append(maxParam, (maxVal / 3.26156).toString());
+                    } else {
+                        params.append(maxParam, maxVal.toString());
+                    }
+                }
+            }
+        });
+        
+        const habitabilityMin = document.getElementById('habitabilityMin').value;
+        if (habitabilityMin > 0) {
+            params.append('min_habitability', habitabilityMin);
+        }
+        
+        params.append('limit', '200');
+        
+        const response = await fetch(`/api/perfect-planet?${params.toString()}`);
+        const data = await response.json();
+        
+        loadingSpinner.style.display = 'none';
+        
+        if (data.exoplanets && data.exoplanets.length > 0) {
+            displayExoplanets(data.exoplanets);
+            updateResultsTitle(data.total, `${data.total} planets match your criteria`, 'perfect');
+        } else {
+            noResults.style.display = 'block';
+            resultsGrid.innerHTML = '';
+        }
+        
+    } catch (error) {
+        console.error('Error searching perfect planets:', error);
+        loadingSpinner.style.display = 'none';
+        noResults.style.display = 'block';
+    }
 }
 </script>
 {% endblock %}

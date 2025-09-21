@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """
-ultra_fast_enrich.py – MAXIMUM SPEED enrichment 
-- 50 concurrent requests (doubled)
-- GPT-3.5-turbo (faster, cheaper)
-- Shorter prompts (less tokens)
-- Skip embeddings initially
-- Exponential backoff
+enrich.py – Enhanced Exoplanet Description Generator
+- Detailed 3-4 sentence descriptions using GPT-4o-mini
+- Comprehensive planet information context
+- Higher quality scientific explanations
+- Balanced speed and detail optimization
+- 25 concurrent requests for stability
+
+Note: This script was primarily created using AI assistance.
 """
 
 import os, re, asyncio
@@ -41,8 +43,14 @@ logging.getLogger("httpx").setLevel(logging.WARNING)
 
 oai = AsyncOpenAI(api_key=OAI_KEY)
 
-# SHORTER prompt for faster generation
-SYSTEM_PROMPT = """Write a 1-2 sentence exciting description of this exoplanet using its key properties. Be vivid and engaging."""
+# Enhanced prompt for longer, more detailed descriptions
+SYSTEM_PROMPT = """You are a space exploration expert writing engaging and detailed exoplanet descriptions. Create a vivid 3-4 sentence description that:
+
+1. Opens with an evocative description of the planet's environment and key characteristics
+2. Explains what makes this world unique using specific scientific details
+3. Discusses its habitability prospects or interesting features
+
+Use accessible language that conveys scientific significance while being exciting and discovery-focused. Include specific measurements and comparisons to Earth when relevant."""
 
 def calculate_habitability_score(planet):
     """Fast habitability calculation with robust error handling"""
@@ -143,12 +151,95 @@ async def generate_description_fast(planet_data: Dict[str, Any], sem: asyncio.Se
                 logger.error(f"Unexpected error for {planet_name}: {e}")
                 return None
 
+async def generate_description_detailed(planet_data: Dict[str, Any], sem: asyncio.Semaphore, retries: int = 3) -> Optional[Dict[str, Any]]:
+    """Enhanced description generation with detailed information"""
+    async with sem:
+        for attempt in range(retries):
+            try:
+                # Build comprehensive user message
+                planet_name = planet_data.get('pl_name', 'Unknown')
+                score = planet_data.get('habitability_score', 0)
+                category = planet_data.get('habitability_category', 'Unknown')
+                
+                # Gather detailed planet information
+                radius = planet_data.get('pl_rade', 'Unknown')
+                temp = planet_data.get('pl_eqt', 'Unknown')
+                insolation = planet_data.get('pl_insol', 'Unknown')
+                mass_earth = planet_data.get('pl_bmasse', 'Unknown')
+                mass_jupiter = planet_data.get('pl_bmassj', 'Unknown')
+                orbital_period = planet_data.get('pl_orbper', 'Unknown')
+                host_star = planet_data.get('hostname', 'Unknown')
+                discovery_year = planet_data.get('disc_year', 'Unknown')
+                
+                # Distance information
+                distance_info = ""
+                if planet_data.get('sy_dist'):
+                    ly = planet_data['sy_dist'] * 3.26156
+                    pc = planet_data['sy_dist']
+                    distance_info = f" | Distance: {ly:.1f} light-years ({pc:.1f} parsecs)"
+                
+                # Stellar information
+                stellar_info = ""
+                if planet_data.get('st_teff'):
+                    stellar_temp = planet_data['st_teff']
+                    stellar_info = f" | Host star temp: {stellar_temp:.0f}K"
+                
+                # Orbital information
+                orbital_info = ""
+                if planet_data.get('pl_orbsmax'):
+                    orbit_au = planet_data['pl_orbsmax']
+                    orbital_info = f" | Orbit: {orbit_au:.3f} AU"
+                
+                # Comprehensive user message with rich context
+                user_msg = f"""Planet: {planet_name} 
+Host Star: {host_star}
+Habitability: {score}/100 ({category})
+Physical Properties: Radius {radius}R⊕, Mass {mass_earth}M⊕, Temperature {temp}K
+Orbital Properties: Period {orbital_period} days{orbital_info}
+Stellar Flux: {insolation} times Earth's
+Discovery Year: {discovery_year}{distance_info}{stellar_info}"""
+                
+                # Use GPT-4 for higher quality longer descriptions
+                response = await oai.chat.completions.create(
+                    model="gpt-4o-mini",  # Better quality for detailed descriptions
+                    messages=[
+                        {"role": "system", "content": SYSTEM_PROMPT},
+                        {"role": "user", "content": user_msg}
+                    ],
+                    max_tokens=400,  # Much longer responses
+                    temperature=0.8  # Slightly more creative
+                )
+                
+                description = response.choices[0].message.content.strip()
+                
+                return {
+                    'pl_name': planet_name,
+                    'description': description,
+                    'habitability_score': score,
+                    'habitability_category': category,
+                    'habitability_color': planet_data.get('habitability_color', '#666666'),
+                    'habitability_icon': planet_data.get('habitability_icon', 'fas fa-question')
+                }
+                
+            except OpenAIError as e:
+                if attempt < retries - 1:
+                    # Exponential backoff with jitter
+                    delay = (2 ** attempt) + random.uniform(0, 1)
+                    logger.warning(f"Attempt {attempt + 1} failed for {planet_name}, retrying in {delay:.1f}s: {e}")
+                    await asyncio.sleep(delay)
+                else:
+                    logger.error(f"Failed to generate description for {planet_name} after {retries} attempts: {e}")
+                    return None
+            except Exception as e:
+                logger.error(f"Unexpected error for {planet_name}: {e}")
+                return None
+
 async def ultra_fast_batch_update(enriched_planets: List[Dict[str, Any]]) -> None:
     """REMOVED - using inline updates for maximum speed"""
     pass
 
 async def enrich_all_planets() -> None:
-    """Ultra-fast main enrichment process"""
+    """Enhanced enrichment process with detailed descriptions"""
     start_time = time.time()
     
     # Get all planets and ensure columns exist
@@ -162,7 +253,7 @@ async def enrich_all_planets() -> None:
         con.execute("ALTER TABLE exo.raw_ps ADD COLUMN IF NOT EXISTS habitability_icon TEXT")
         
         planets = con.execute("SELECT * FROM exo.raw_ps").fetchdf().to_dict('records')
-        logger.info(f"🚀 ULTRA-FAST MODE: Processing {len(planets)} planets with maximum speed")
+        logger.info(f"🚀 ENHANCED MODE: Processing {len(planets)} planets with detailed descriptions")
         
         # Add habitability calculations
         for planet in planets:
@@ -180,30 +271,30 @@ async def enrich_all_planets() -> None:
     finally:
         con.close()
     
-    # MAXIMUM concurrency - push the limits!
-    sem = asyncio.Semaphore(50)  # Even higher concurrency
+    # Reduced concurrency for longer, higher-quality descriptions
+    sem = asyncio.Semaphore(25)  # Lower concurrency for GPT-4 and longer responses
     
-    # Larger batches for maximum throughput
-    batch_size = 100
+    # Smaller batches for better quality control
+    batch_size = 50
     
     for i in range(0, len(planets), batch_size):
         batch = planets[i:i+batch_size]
         batch_num = (i // batch_size) + 1
         total_batches = (len(planets) + batch_size - 1) // batch_size
         
-        logger.info(f"⚡ ULTRA batch {batch_num}/{total_batches} ({len(batch)} planets)")
+        logger.info(f"📝 Enhanced batch {batch_num}/{total_batches} ({len(batch)} planets)")
         
-        # Process with maximum concurrency
-        tasks = [generate_description_fast(planet, sem) for planet in batch]
+        # Process with detailed generation
+        tasks = [generate_description_detailed(planet, sem) for planet in batch]
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
         # Filter successful results
         successful = [r for r in results if r is not None and not isinstance(r, Exception)]
         
         if successful:
-            logger.info(f"✅ Generated {len(successful)} descriptions in batch {batch_num}")
+            logger.info(f"✅ Generated {len(successful)} detailed descriptions in batch {batch_num}")
             
-            # Update database with descriptions only (no embeddings for speed)
+            # Update database with descriptions
             con = duckdb.connect(str(DB_PATH))
             try:
                 for planet in successful:
@@ -228,20 +319,20 @@ async def enrich_all_planets() -> None:
         else:
             logger.warning(f"❌ No successful results in batch {batch_num}")
         
-        # Brief pause between batches to avoid overwhelming the API
+        # Longer pause between batches for GPT-4 rate limits
         if i + batch_size < len(planets):
-            await asyncio.sleep(0.1)  # Minimal delay
+            await asyncio.sleep(0.5)  # Longer delay for detailed processing
     
     elapsed = time.time() - start_time
-    logger.info(f"🎉 ULTRA-FAST enrichment complete! Processed {len(planets)} planets in {elapsed:.1f}s ({len(planets)/elapsed:.1f} planets/sec)")
+    logger.info(f"🎉 ENHANCED enrichment complete! Processed {len(planets)} planets with detailed descriptions in {elapsed:.1f}s ({len(planets)/elapsed:.1f} planets/sec)")
 
 def main():
-    """Main execution with ultra-fast processing"""
+    """Main execution with enhanced detailed processing"""
     if not OAI_KEY:
         logger.error("❌ OPENAI_API_KEY not found in environment")
         return
         
-    logger.info("🚀 ULTRA-FAST MODE: Maximum speed description generation")
+    logger.info("🚀 ENHANCED MODE: Generating detailed exoplanet descriptions")
     asyncio.run(enrich_all_planets())
 
 if __name__ == "__main__":

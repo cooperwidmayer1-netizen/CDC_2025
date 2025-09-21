@@ -57,7 +57,7 @@ def calculate_habitability_score(planet):
     # Insolation score (0-40 points)
     if planet.get('pl_insol') is not None and not pd.isna(planet['pl_insol']):
         insolation = planet['pl_insol']
-        if 0.3 <= insolation <= 1.5:
+        if 0.3 <= insolation <= 1.04:
             if insolation <= 1.0:
                 insolation_score = 40 * (insolation / 1.0)
             else:
@@ -143,8 +143,8 @@ def cosine_similarity(a, b):
 
 @app.route('/')
 def index():
-    """Home page with space theme"""
-    return render_template('index.html')
+    """Main page - Exoplanets search"""
+    return render_template('exoplanets.html')
 
 @app.route('/api/exoplanets')
 def get_exoplanets():
@@ -224,6 +224,264 @@ def get_exoplanets():
             con.close()
         return jsonify({'error': str(e)}), 500
 
+@app.route('/api/perfect-planet')
+def get_perfect_planet():
+    """API endpoint to find planets matching user-specified criteria"""
+    con = get_db_connection()
+    if not con:
+        return jsonify({'error': 'Database not found. Please run dataPull.py first.'}), 404
+    
+    try:
+        # Get filter parameters from query string
+        min_radius = request.args.get('min_radius', type=float)
+        max_radius = request.args.get('max_radius', type=float)
+        min_mass = request.args.get('min_mass', type=float)
+        max_mass = request.args.get('max_mass', type=float)
+        min_period = request.args.get('min_period', type=float)
+        max_period = request.args.get('max_period', type=float)
+        min_insolation = request.args.get('min_insolation', type=float)
+        max_insolation = request.args.get('max_insolation', type=float)
+        min_density = request.args.get('min_density', type=float)
+        max_density = request.args.get('max_density', type=float)
+        min_orbit = request.args.get('min_orbit', type=float)
+        max_orbit = request.args.get('max_orbit', type=float)
+        min_eccentricity = request.args.get('min_eccentricity', type=float)
+        max_eccentricity = request.args.get('max_eccentricity', type=float)
+        min_distance = request.args.get('min_distance', type=float)
+        max_distance = request.args.get('max_distance', type=float)
+        min_habitability = request.args.get('min_habitability', type=int)
+        limit = request.args.get('limit', 100, type=int)
+        
+        # Build dynamic WHERE clause
+        where_conditions = []
+        params = []
+        
+        if min_radius is not None:
+            where_conditions.append("pl_rade >= ?")
+            params.append(min_radius)
+        if max_radius is not None:
+            where_conditions.append("pl_rade <= ?")
+            params.append(max_radius)
+            
+        if min_mass is not None:
+            where_conditions.append("pl_bmasse >= ?")
+            params.append(min_mass)
+        if max_mass is not None:
+            where_conditions.append("pl_bmasse <= ?")
+            params.append(max_mass)
+            
+        if min_period is not None:
+            where_conditions.append("pl_orbper >= ?")
+            params.append(min_period)
+        if max_period is not None:
+            where_conditions.append("pl_orbper <= ?")
+            params.append(max_period)
+            
+        if min_density is not None:
+            where_conditions.append("pl_dens >= ?")
+            params.append(min_density)
+        if max_density is not None:
+            where_conditions.append("pl_dens <= ?")
+            params.append(max_density)
+            
+        if min_orbit is not None:
+            where_conditions.append("pl_orbsmax >= ?")
+            params.append(min_orbit)
+        if max_orbit is not None:
+            where_conditions.append("pl_orbsmax <= ?")
+            params.append(max_orbit)
+            
+        if min_eccentricity is not None:
+            where_conditions.append("pl_orbeccen >= ?")
+            params.append(min_eccentricity)
+        if max_eccentricity is not None:
+            where_conditions.append("pl_orbeccen <= ?")
+            params.append(max_eccentricity)
+            
+        if min_insolation is not None:
+            where_conditions.append("pl_insol >= ?")
+            params.append(min_insolation)
+        if max_insolation is not None:
+            where_conditions.append("pl_insol <= ?")
+            params.append(max_insolation)
+            
+        if min_distance is not None:
+            where_conditions.append("sy_dist >= ?")
+            params.append(min_distance)
+        if max_distance is not None:
+            where_conditions.append("sy_dist <= ?")
+            params.append(max_distance)
+        
+        # Build query
+        query = "SELECT * FROM exo.raw_ps"
+        if where_conditions:
+            query += " WHERE " + " AND ".join(where_conditions)
+        
+        # Execute query
+        df = con.execute(query, params).df()
+        con.close()
+        
+        # Convert to JSON-serializable format and add habitability scores
+        data = df.to_dict('records')
+        
+        # Add habitability scores and filter by habitability if requested
+        filtered_data = []
+        for planet in data:
+            score = calculate_habitability_score(planet)
+            habitability_info = get_habitability_category(score)
+            
+            planet['habitability_score'] = score
+            planet['habitability_category'] = habitability_info['category']
+            planet['habitability_color'] = habitability_info['color']
+            planet['habitability_icon'] = habitability_info['icon']
+            
+            # Apply habitability filter if specified
+            if min_habitability is None or score >= min_habitability:
+                filtered_data.append(planet)
+        
+        # Sort by habitability score (highest first)
+        filtered_data.sort(key=lambda x: x['habitability_score'] or 0, reverse=True)
+        
+        # Apply limit
+        limited_data = filtered_data[:limit]
+        
+        cleaned_data = clean_data_for_json(limited_data)
+        
+        return jsonify({
+            'exoplanets': cleaned_data,
+            'total': len(limited_data),
+            'total_available': len(filtered_data),
+            'filters_applied': len(where_conditions) > 0 or min_habitability is not None
+        })
+    
+    except Exception as e:
+        if con:
+            con.close()
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/data-ranges')
+def get_data_ranges():
+    """API endpoint to get data ranges for perfect planet builder"""
+    con = get_db_connection()
+    if not con:
+        return jsonify({'error': 'Database not found'}), 404
+    
+    try:
+        ranges_query = """
+        SELECT 
+            'radius' as field,
+            MIN(pl_rade) as min_val,
+            MAX(pl_rade) as max_val,
+            AVG(pl_rade) as avg_val,
+            COUNT(pl_rade) as count_non_null
+        FROM exo.raw_ps
+        WHERE pl_rade IS NOT NULL
+        
+        UNION ALL
+        
+        SELECT 
+            'mass' as field,
+            MIN(pl_bmasse) as min_val,
+            MAX(pl_bmasse) as max_val,
+            AVG(pl_bmasse) as avg_val,
+            COUNT(pl_bmasse) as count_non_null
+        FROM exo.raw_ps
+        WHERE pl_bmasse IS NOT NULL
+        
+        UNION ALL
+        
+        SELECT 
+            'density' as field,
+            MIN(pl_dens) as min_val,
+            MAX(pl_dens) as max_val,
+            AVG(pl_dens) as avg_val,
+            COUNT(pl_dens) as count_non_null
+        FROM exo.raw_ps
+        WHERE pl_dens IS NOT NULL
+        
+        UNION ALL
+        
+        SELECT 
+            'orbit' as field,
+            MIN(pl_orbsmax) as min_val,
+            MAX(pl_orbsmax) as max_val,
+            AVG(pl_orbsmax) as avg_val,
+            COUNT(pl_orbsmax) as count_non_null
+        FROM exo.raw_ps
+        WHERE pl_orbsmax IS NOT NULL
+        
+        UNION ALL
+        
+        SELECT 
+            'eccentricity' as field,
+            MIN(pl_orbeccen) as min_val,
+            MAX(pl_orbeccen) as max_val,
+            AVG(pl_orbeccen) as avg_val,
+            COUNT(pl_orbeccen) as count_non_null
+        FROM exo.raw_ps
+        WHERE pl_orbeccen IS NOT NULL
+        
+        UNION ALL
+        
+        SELECT 
+            'period' as field,
+            MIN(pl_orbper) as min_val,
+            MAX(pl_orbper) as max_val,
+            AVG(pl_orbper) as avg_val,
+            COUNT(pl_orbper) as count_non_null
+        FROM exo.raw_ps
+        WHERE pl_orbper IS NOT NULL
+        
+        UNION ALL
+        
+        SELECT 
+            'insolation' as field,
+            MIN(pl_insol) as min_val,
+            MAX(pl_insol) as max_val,
+            AVG(pl_insol) as avg_val,
+            COUNT(pl_insol) as count_non_null
+        FROM exo.raw_ps
+        WHERE pl_insol IS NOT NULL
+        
+        UNION ALL
+        
+        SELECT 
+            'distance' as field,
+            MIN(sy_dist) as min_val,
+            MAX(sy_dist) as max_val,
+            AVG(sy_dist) as avg_val,
+            COUNT(sy_dist) as count_non_null
+        FROM exo.raw_ps
+        WHERE sy_dist IS NOT NULL
+        """
+        
+        ranges_df = con.execute(ranges_query).df()
+        ranges_data = ranges_df.to_dict('records')
+        
+        con.close()
+        
+        # Convert to a more usable format
+        ranges = {}
+        for row in ranges_data:
+            field = row['field']
+            ranges[field] = {
+                'min': row['min_val'],
+                'max': row['max_val'],
+                'avg': row['avg_val'],
+                'count': row['count_non_null']
+            }
+        
+        cleaned_ranges = clean_data_for_json(ranges)
+        
+        return jsonify({
+            'ranges': cleaned_ranges
+        })
+    
+    except Exception as e:
+        if con:
+            con.close()
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/api/stats')
 def get_stats():
     """API endpoint to get exoplanet statistics"""
@@ -275,10 +533,9 @@ def get_stats():
             con.close()
         return jsonify({'error': str(e)}), 500
 
-@app.route('/exoplanets')
-def exoplanets():
-    """Exoplanets page"""
-    return render_template('exoplanets.html')
+# Exoplanets page is now the main page at '/'
+
+# Perfect Planet Builder is now integrated into the main page
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8080)
