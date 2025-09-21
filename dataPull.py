@@ -31,14 +31,17 @@ COLUMNS = [
     "pl_bmasse","pl_bmassj","pl_orbeccen","pl_orbper",
     "st_teff","st_rad","st_mass",
     "pl_orbsmax","pl_dens","pl_trandep",
-    "default_flag","disc_year"
+    "sy_dist","disc_year"
 ]
 
-# Filter to the default solution rows
-WHERE = "default_flag = 1"
+# Filter to the default solution rows - not needed for pscomppars
+WHERE = ""
 
 # Build TAP query
-sql = f"SELECT {', '.join(COLUMNS)} FROM {TABLE} WHERE {WHERE}"
+if WHERE:
+    sql = f"SELECT {', '.join(COLUMNS)} FROM {TABLE} WHERE {WHERE}"
+else:
+    sql = f"SELECT {', '.join(COLUMNS)} FROM {TABLE}"
 encoded_sql = urllib.parse.quote_plus(sql)
 
 # TAP sync endpoint
@@ -70,12 +73,11 @@ def to_dataframe(tap_json: dict) -> pd.DataFrame:
     numeric_cols = [
         "pl_insol","pl_rade","pl_eqt","pl_bmasse","pl_bmassj",
         "pl_orbeccen","pl_orbper","st_teff","st_rad","st_mass",
-        "pl_orbsmax","pl_dens","pl_trandep"
+        "pl_orbsmax","pl_dens","pl_trandep","sy_dist"
     ]
     for col in numeric_cols:
         df[col] = pd.to_numeric(df[col], errors="coerce")
     df["disc_year"] = pd.to_numeric(df["disc_year"], errors="coerce").astype("Int64")
-    df["default_flag"] = pd.to_numeric(df["default_flag"], errors="coerce").astype("Int64")
     return df
 
 def main():

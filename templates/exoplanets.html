@@ -1,0 +1,443 @@
+{% extends "base.html" %}
+
+{% block title %}Exoplanets - Space Explorer{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-title">
+            <i class="fas fa-globe"></i>
+            Exoplanets Database
+        </h1>
+        <p class="page-subtitle">Explore discovered exoplanets beyond our solar system</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="search-section">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search by planet name, host star, or describe what you're looking for...">
+            <button id="searchBtn" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+                Search
+            </button>
+        </div>
+        <div class="filters">
+            <select id="limitSelect" class="filter-select">
+                <option value="50">Show 50</option>
+                <option value="100" selected>Show 100</option>
+                <option value="200">Show 200</option>
+                <option value="500">Show 500</option>
+            </select>
+            <label class="search-type-toggle">
+                <input type="checkbox" id="semanticSearchToggle">
+                <span class="toggle-label">
+                    <i class="fas fa-brain"></i>
+                    AI Search
+                </span>
+            </label>
+        </div>
+    </div>
+
+    <div class="search-info" id="searchInfo" style="display: none;">
+        <div class="search-type-indicator">
+            <i class="fas fa-info-circle"></i>
+            <span id="searchTypeText">Traditional search</span>
+        </div>
+    </div>
+
+    <div class="results-section">
+        <div class="results-header">
+            <h2 id="resultsTitle">Exoplanets</h2>
+            <div class="loading-spinner" id="loadingSpinner" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+        </div>
+        
+        <div class="exoplanets-grid" id="exoplanetsGrid">
+            <!-- Exoplanet cards will be loaded here -->
+        </div>
+        
+        <div class="no-results" id="noResults" style="display: none;">
+            <i class="fas fa-search"></i>
+            <h3>No exoplanets found</h3>
+            <p>Try adjusting your search criteria</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    loadExoplanets();
+    
+    // Search functionality
+    document.getElementById('searchBtn').addEventListener('click', performSearch);
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
+    
+    // Limit selector
+    document.getElementById('limitSelect').addEventListener('change', function() {
+        const currentSearch = document.getElementById('searchInput').value.trim();
+        loadExoplanets(currentSearch);
+    });
+    
+    // Semantic search toggle
+    document.getElementById('semanticSearchToggle').addEventListener('change', function() {
+        const currentSearch = document.getElementById('searchInput').value.trim();
+        if (currentSearch) {
+            loadExoplanets(currentSearch);
+        }
+    });
+    
+    // Close expanded cards when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.exoplanet-card')) {
+            const expandedCards = document.querySelectorAll('.exoplanet-card.expanded');
+            expandedCards.forEach(card => {
+                const descriptionDiv = card.querySelector('.planet-description');
+                const expandedStatsDiv = card.querySelector('.expanded-stats');
+                const clickIndicator = card.querySelector('.click-indicator');
+                
+                descriptionDiv.style.display = 'none';
+                expandedStatsDiv.style.display = 'none';
+                card.classList.remove('expanded');
+                card.style.top = '';
+                clickIndicator.innerHTML = '<i class="fas fa-info-circle"></i><span>Click to view description</span>';
+            });
+        }
+    });
+});
+
+function performSearch() {
+    const searchTerm = document.getElementById('searchInput').value.trim();
+    loadExoplanets(searchTerm);
+}
+
+function loadExoplanets(search = '') {
+    const limit = document.getElementById('limitSelect').value;
+    const semanticSearch = document.getElementById('semanticSearchToggle').checked;
+    const spinner = document.getElementById('loadingSpinner');
+    const grid = document.getElementById('exoplanetsGrid');
+    const noResults = document.getElementById('noResults');
+    const searchInfo = document.getElementById('searchInfo');
+    
+    spinner.style.display = 'block';
+    grid.innerHTML = '';
+    noResults.style.display = 'none';
+    
+    const params = new URLSearchParams({
+        limit: limit
+    });
+    
+    if (search) {
+        params.append('search', search);
+        if (semanticSearch) {
+            params.append('semantic', 'true');
+        }
+    }
+    
+    fetch(`/api/exoplanets?${params}`)
+        .then(response => response.json())
+        .then(data => {
+            spinner.style.display = 'none';
+            
+            if (data.error) {
+                showError(data.error);
+                return;
+            }
+            
+            if (data.exoplanets && data.exoplanets.length > 0) {
+                displayExoplanets(data.exoplanets);
+                updateResultsTitle(data.total, search, data.search_type);
+                updateSearchInfo(data.search_type, search);
+            } else {
+                noResults.style.display = 'block';
+            }
+        })
+        .catch(error => {
+            spinner.style.display = 'none';
+            showError('Failed to load exoplanets');
+            console.error('Error:', error);
+        });
+}
+
+function displayExoplanets(exoplanets) {
+    const grid = document.getElementById('exoplanetsGrid');
+    
+    exoplanets.forEach((planet, index) => {
+        const card = createExoplanetCard(planet, index);
+        grid.appendChild(card);
+    });
+}
+
+function createExoplanetCard(planet, index) {
+    const card = document.createElement('div');
+    card.className = 'exoplanet-card clickable-card';
+    
+    // Detect if this is a middle card (assumes 3-column grid)
+    const isMiddleCard = (index + 1) % 3 === 2; // Middle card in each row of 3
+    if (isMiddleCard) {
+        card.classList.add('middle-card');
+    }
+    
+    const radius = planet.pl_rade ? `${planet.pl_rade.toFixed(2)} R⊕` : 'Unknown';
+    const insolation = planet.pl_insol ? `${planet.pl_insol.toFixed(2)} S⊕` : 'Unknown';
+    const temperature = planet.pl_eqt ? `${Math.round(planet.pl_eqt)} K` : 'Unknown';
+    const year = planet.disc_year || 'Unknown';
+    
+    // Habitability score and category
+    const score = planet.habitability_score || 0;
+    const category = planet.habitability_category || 'Unknown';
+    const color = planet.habitability_color || '#666666';
+    const icon = planet.habitability_icon || 'fas fa-question';
+    
+    // Description
+    const description = planet.description || 'Description not available yet.';
+    
+    // Additional stats for expanded view
+    const massEarth = planet.pl_bmasse ? `${planet.pl_bmasse.toFixed(3)} M⊕` : 'Unknown';
+    const massJupiter = planet.pl_bmassj ? `${planet.pl_bmassj.toFixed(4)} M♃` : 'Unknown';
+    const orbitalPeriod = planet.pl_orbper ? `${planet.pl_orbper.toFixed(2)} days` : 'Unknown';
+    const eccentricity = planet.pl_orbeccen ? planet.pl_orbeccen.toFixed(3) : 'Unknown';
+    const semiMajorAxis = planet.pl_orbsmax ? `${planet.pl_orbsmax.toFixed(3)} AU` : 'Unknown';
+    const density = planet.pl_dens ? `${planet.pl_dens.toFixed(2)} g/cm³` : 'Unknown';
+    const transitDepth = planet.pl_trandep ? `${(planet.pl_trandep * 1000).toFixed(2)} ppt` : 'Unknown';
+    
+    // Distance calculations
+    const distanceParsecs = planet.sy_dist ? `${planet.sy_dist.toFixed(2)} pc` : 'Unknown';
+    const distanceLightYears = planet.sy_dist ? `${(planet.sy_dist * 3.26156).toFixed(2)} ly` : 'Unknown';
+    
+    // Stellar properties
+    const stellarTemp = planet.st_teff ? `${Math.round(planet.st_teff)} K` : 'Unknown';
+    const stellarRadius = planet.st_rad ? `${planet.st_rad.toFixed(2)} R☉` : 'Unknown';
+    const stellarMass = planet.st_mass ? `${planet.st_mass.toFixed(2)} M☉` : 'Unknown';
+    
+    // Similarity score for semantic search
+    const similarityScore = planet.similarity_score;
+    const similarityBadge = similarityScore ? 
+        `<div class="similarity-badge" style="background: linear-gradient(135deg, ${color}22, ${color}44); border-left: 3px solid ${color};">
+            <i class="fas fa-brain"></i>
+            <span>${Math.round(similarityScore * 100)}% match</span>
+        </div>` : '';
+    
+    card.innerHTML = `
+        <div class="card-header">
+            <h3 class="planet-name">${planet.pl_name || 'Unknown'}</h3>
+            <div class="planet-badge">${year}</div>
+        </div>
+        ${similarityBadge}
+        <div class="habitability-score" style="background: linear-gradient(135deg, ${color}22, ${color}44); border-left: 4px solid ${color};">
+            <div class="score-main">
+                <i class="${icon}" style="color: ${color};"></i>
+                <div class="score-info">
+                    <div class="score-number" style="color: ${color};">${score}/100</div>
+                    <div class="score-category" style="color: ${color};">${category}</div>
+                </div>
+            </div>
+        </div>
+        <div class="planet-description" style="display: none;">
+            <p>${description}</p>
+        </div>
+        <div class="expanded-stats" style="display: none;">
+            <div class="stats-section">
+                <h4><i class="fas fa-globe"></i> Planet Properties</h4>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <i class="fas fa-weight-hanging"></i>
+                        <span class="stat-label">Mass (Earth):</span>
+                        <span class="stat-value">${massEarth}</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-weight-hanging"></i>
+                        <span class="stat-label">Mass (Jupiter):</span>
+                        <span class="stat-value">${massJupiter}</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-clock"></i>
+                        <span class="stat-label">Orbital Period:</span>
+                        <span class="stat-value">${orbitalPeriod}</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-route"></i>
+                        <span class="stat-label">Orbit Distance:</span>
+                        <span class="stat-value">${semiMajorAxis}</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-circle"></i>
+                        <span class="stat-label">Eccentricity:</span>
+                        <span class="stat-value">${eccentricity}</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-cube"></i>
+                        <span class="stat-label">Density:</span>
+                        <span class="stat-value">${density}</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-eye"></i>
+                        <span class="stat-label">Transit Depth:</span>
+                        <span class="stat-value">${transitDepth}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="stats-section">
+                <h4><i class="fas fa-star"></i> Host Star Properties</h4>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <i class="fas fa-thermometer-half"></i>
+                        <span class="stat-label">Temperature:</span>
+                        <span class="stat-value">${stellarTemp}</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                        <span class="stat-label">Radius:</span>
+                        <span class="stat-value">${stellarRadius}</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-weight-hanging"></i>
+                        <span class="stat-label">Mass:</span>
+                        <span class="stat-value">${stellarMass}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="stats-section">
+                <h4><i class="fas fa-map-marked-alt"></i> System Distance</h4>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <i class="fas fa-ruler-horizontal"></i>
+                        <span class="stat-label">Distance (Parsecs):</span>
+                        <span class="stat-value">${distanceParsecs}</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-rocket"></i>
+                        <span class="stat-label">Distance (Light Years):</span>
+                        <span class="stat-value">${distanceLightYears}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="planet-info">
+                <div class="info-item">
+                    <i class="fas fa-star"></i>
+                    <span class="label">Host Star:</span>
+                    <span class="value">${planet.hostname || 'Unknown'}</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                    <span class="label">Radius:</span>
+                    <span class="value">${radius}</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-sun"></i>
+                    <span class="label">Insolation:</span>
+                    <span class="value">${insolation}</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-thermometer-half"></i>
+                    <span class="label">Temperature:</span>
+                    <span class="value">${temperature}</span>
+                </div>
+            </div>
+        </div>
+        <div class="click-indicator">
+            <i class="fas fa-info-circle"></i>
+            <span>Click to view description</span>
+        </div>
+    `;
+    
+    // Add click handler for the entire card
+    const descriptionDiv = card.querySelector('.planet-description');
+    const expandedStatsDiv = card.querySelector('.expanded-stats');
+    const clickIndicator = card.querySelector('.click-indicator');
+    
+    card.addEventListener('click', function(e) {
+        // Prevent event bubbling
+        e.stopPropagation();
+        
+        // Close any other expanded cards first
+        const otherExpandedCards = document.querySelectorAll('.exoplanet-card.expanded');
+        otherExpandedCards.forEach(otherCard => {
+            if (otherCard !== card) {
+                const otherDescriptionDiv = otherCard.querySelector('.planet-description');
+                const otherExpandedStatsDiv = otherCard.querySelector('.expanded-stats');
+                const otherClickIndicator = otherCard.querySelector('.click-indicator');
+                
+                otherDescriptionDiv.style.display = 'none';
+                otherExpandedStatsDiv.style.display = 'none';
+                otherCard.classList.remove('expanded');
+                otherClickIndicator.innerHTML = '<i class="fas fa-info-circle"></i><span>Click to view description</span>';
+            }
+        });
+        
+        const isExpanded = descriptionDiv.style.display !== 'none';
+        
+        if (isExpanded) {
+            // Collapse
+            descriptionDiv.style.display = 'none';
+            expandedStatsDiv.style.display = 'none';
+            card.classList.remove('expanded');
+            card.style.top = '';
+            clickIndicator.innerHTML = '<i class="fas fa-info-circle"></i><span>Click to view description</span>';
+        } else {
+            // Get the card's current position
+            const cardRect = card.getBoundingClientRect();
+            const containerRect = card.parentElement.getBoundingClientRect();
+            
+            // Position the expanded card at the current card's location
+            card.style.top = (cardRect.top - containerRect.top + card.parentElement.scrollTop) + 'px';
+            
+            // Expand
+            descriptionDiv.style.display = 'block';
+            expandedStatsDiv.style.display = 'block';
+            card.classList.add('expanded');
+            clickIndicator.innerHTML = '<i class="fas fa-times-circle"></i><span>Click to hide description</span>';
+        }
+    });
+    
+    return card;
+}
+
+function updateResultsTitle(total, search, searchType) {
+    const title = document.getElementById('resultsTitle');
+    if (search) {
+        const searchTypeText = searchType === 'semantic' ? ' (AI-powered search)' : ' (text search)';
+        title.textContent = `Found ${total} exoplanets matching "${search}"${searchTypeText}`;
+    } else {
+        title.textContent = `Showing ${total} exoplanets (sorted by habitability)`;
+    }
+}
+
+function updateSearchInfo(searchType, search) {
+    const searchInfo = document.getElementById('searchInfo');
+    const searchTypeText = document.getElementById('searchTypeText');
+    
+    if (search) {
+        if (searchType === 'semantic') {
+            searchTypeText.textContent = 'AI-powered semantic search - finding planets based on meaning and context';
+        } else {
+            searchTypeText.textContent = 'Traditional text search - finding exact matches in names';
+        }
+        searchInfo.style.display = 'block';
+    } else {
+        searchInfo.style.display = 'none';
+    }
+}
+
+function showError(message) {
+    const grid = document.getElementById('exoplanetsGrid');
+    grid.innerHTML = `
+        <div class="error-message">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Error</h3>
+            <p>${message}</p>
+        </div>
+    `;
+}
+</script>
+{% endblock %}

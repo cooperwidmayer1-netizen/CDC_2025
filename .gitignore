@@ -6,3 +6,4 @@ venv/
 *.zip
 *.log
 .ipynb_checkpoints/
+.env

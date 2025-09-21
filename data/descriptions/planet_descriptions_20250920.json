@@ -1,0 +1,302 @@
+[
+  {
+    "pl_name":"Teegarden's Star b",
+    "hostname":"Teegarden's Star",
+    "final_score":0.9231303666,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"TOI-700 d",
+    "hostname":"TOI-700",
+    "final_score":0.8743304752,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"GJ 273 b",
+    "hostname":"GJ 273",
+    "final_score":0.8515601236,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"L 98-59 f",
+    "hostname":"L 98-59",
+    "final_score":0.846714388,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"TOI-700 e",
+    "hostname":"TOI-700",
+    "final_score":0.8356566491,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-1649 c",
+    "hostname":"Kepler-1649",
+    "final_score":0.8261872553,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"K2-72 e",
+    "hostname":"K2-72",
+    "final_score":0.8053886268,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"LP 890-9 c",
+    "hostname":"LP 890-9",
+    "final_score":0.7989844292,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-1652 b",
+    "hostname":"Kepler-1652",
+    "final_score":0.7965512253,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-438 b",
+    "hostname":"Kepler-438",
+    "final_score":0.7873518727,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Ross 128 b",
+    "hostname":"Ross 128",
+    "final_score":0.7747891414,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Proxima Cen b",
+    "hostname":"Proxima Cen",
+    "final_score":0.7607874861,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"GJ 1002 b",
+    "hostname":"GJ 1002",
+    "final_score":0.7504672406,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"K2-3 d",
+    "hostname":"K2-3",
+    "final_score":0.7467110913,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"TRAPPIST-1 e",
+    "hostname":"TRAPPIST-1",
+    "final_score":0.7403264875,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-1512 b",
+    "hostname":"Kepler-1512",
+    "final_score":0.7288227788,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-442 b",
+    "hostname":"Kepler-442",
+    "final_score":0.7263300066,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Wolf 1069 b",
+    "hostname":"Wolf 1069",
+    "final_score":0.7262690311,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"GJ 1061 c",
+    "hostname":"GJ 1061",
+    "final_score":0.7148837136,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"TOI-715 b",
+    "hostname":"TOI-715",
+    "final_score":0.6760948106,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-296 e",
+    "hostname":"Kepler-296",
+    "final_score":0.6739354219,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-1229 b",
+    "hostname":"Kepler-1229",
+    "final_score":0.6056284415,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"GJ 1061 d",
+    "hostname":"GJ 1061",
+    "final_score":0.594902424,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-62 f",
+    "hostname":"Kepler-62",
+    "final_score":0.5698739889,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Gliese 12 b",
+    "hostname":"Gliese 12",
+    "final_score":0.5462343388,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"TRAPPIST-1 f",
+    "hostname":"TRAPPIST-1",
+    "final_score":0.503723415,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Teegarden's Star c",
+    "hostname":"Teegarden's Star",
+    "final_score":0.4650801375,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"TRAPPIST-1 d",
+    "hostname":"TRAPPIST-1",
+    "final_score":0.2562066598,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-452 b",
+    "hostname":"Kepler-452",
+    "final_score":0.2561896064,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-1410 b",
+    "hostname":"Kepler-1410",
+    "final_score":0.2311400869,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-283 c",
+    "hostname":"Kepler-283",
+    "final_score":0.2265321363,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-62 e",
+    "hostname":"Kepler-62",
+    "final_score":0.2252591319,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"TOI-1338 b",
+    "hostname":"TOI-1338 A",
+    "final_score":0.2182555506,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-1544 b",
+    "hostname":"Kepler-1544",
+    "final_score":0.2162957133,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Wolf 1061 c",
+    "hostname":"Wolf 1061",
+    "final_score":0.2128178037,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-1362 b",
+    "hostname":"Kepler-1362",
+    "final_score":0.2024368866,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-1554 b",
+    "hostname":"Kepler-1554",
+    "final_score":0.2020135342,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"G 261-6 b",
+    "hostname":"G 261-6",
+    "final_score":0.2018562883,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-1653 b",
+    "hostname":"Kepler-1653",
+    "final_score":0.20111341,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"HD 191939 g",
+    "hostname":"HD 191939",
+    "final_score":0.2007639945,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"TOI-1266 d",
+    "hostname":"TOI-1266",
+    "final_score":0.2001895884,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-967 c",
+    "hostname":"Kepler-967",
+    "final_score":0.1970287956,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-138 e",
+    "hostname":"Kepler-138",
+    "final_score":0.1936302207,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"HD 152843 c",
+    "hostname":"HD 152843",
+    "final_score":0.1926595398,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-1593 b",
+    "hostname":"Kepler-1593",
+    "final_score":0.1871888602,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"HIP 41378 f",
+    "hostname":"HIP 41378",
+    "final_score":0.1857397673,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-1341 b",
+    "hostname":"Kepler-1341",
+    "final_score":0.1851532257,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"K2-18 b",
+    "hostname":"K2-18",
+    "final_score":0.1840873733,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"GJ 3293 b",
+    "hostname":"GJ 3293",
+    "final_score":0.1835328411,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  },
+  {
+    "pl_name":"Kepler-1661 b",
+    "hostname":"Kepler-1661",
+    "final_score":0.1823149956,
+    "description":"Description generation failed: \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https:\/\/github.com\/openai\/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https:\/\/github.com\/openai\/openai-python\/discussions\/742\n"
+  }
+]
