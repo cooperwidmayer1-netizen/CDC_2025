@@ -74,7 +74,7 @@ def calculate_habitability_score(planet):
                 radius_score = 30 * (1.4 - radius) / 0.4
             score += max(0, radius_score)
     
-    # Temperature score (0-20 points)
+    # Temperature score (0-20 pts)
     if planet.get('pl_eqt') is not None and not pd.isna(planet['pl_eqt']):
         temp = planet['pl_eqt']
         if 250 <= temp <= 350:
